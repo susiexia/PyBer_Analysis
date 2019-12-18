@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 import statistics
 import numpy as np 
-
+from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 # %% [markdown]
 ## errorbar__line use .errorbar()
 
@@ -23,5 +23,14 @@ ax1.errorbar(x_axis,y_axis, yerr =stdev,
 
 ax2.barh(x_axis,y_axis)
 ax2.set_xticks(np.arange(51,step =5.0))
+ax2.invert_yaxis()
+
+# minor for ax2
+ax2.xaxis.set_minor_locator(MultipleLocator(1))
+
+#format major ticks for ax1
+ax1.xaxis.set_major_formatter(FormatStrFormatter('%d'))
+
+plt.show()
 
 # %%
