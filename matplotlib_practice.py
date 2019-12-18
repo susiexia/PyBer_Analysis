@@ -96,4 +96,35 @@ ax.barh(x_axis,y_axis,color = 'y')
 ax.invert_yaxis()
 
 
+# %% [markdown]
+### Scatter__MATLAB
+# %%
+plt.scatter(y_axis,x_axis,c='r',s=20,label='Chicago')
+plt.gca().invert_yaxis()
+plt.xlabel('Fare($)')
+plt.ylabel('Date')
+plt.xlim(0,50)
+plt.title('PyBer Fare by Month')
+plt.legend()
+
+# %% [markdown]
+### bubble chart__MATLAB
+# %%
+plt.scatter(x_axis,y_axis,s=[i*5 for i in y_axis], c='g')
+
+# %% [markdown]
+### Scatter__OBJ-Oriented
+
+fig=plt.figure()
+ax = fig.add_subplot()
+ax.scatter(y_axis,x_axis,s=[i*5 for i in y_axis],c='skyblue',alpha = 0.8, linewidths= 2, edgecolors='k',label='Boston')
+ax.set_xlabel('Fare($)')
+ax.set_ylabel('Date')
+ax.invert_yaxis()
+ax.set_title('PyBer Fare by Month')
+ax.set_xlim(right=50)
+
+ax.legend()
+
+
 # %%
