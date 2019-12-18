@@ -136,9 +136,12 @@ explode_tuple = (0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0, 0)
 # MATLAB also use plt.subplots() change fig size 
 
 plt.subplots(figsize=(8,8))
+#fig, ax = plt.subplots()
+#ax.pie()
 
 plt.pie(y_axis,explode=explode_tuple,labels= x_axis,
-        colors=color_list,autopct='%.1f%%',shadow=True, startangle=85,counterclock=False)
+        colors=color_list,autopct='%.1f%%',shadow=True, 
+        startangle=85,counterclock=False)
 
 plt.show()
 
