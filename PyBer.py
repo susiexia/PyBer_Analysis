@@ -71,6 +71,31 @@ rural_avg_driver_Series = rural_cities_df.groupby(rural_cities_df['city']).mean(
 suburban_avg_driver_Series = suburban_cities_df.groupby(suburban_cities_df['city']).mean()['driver_count']
 
 # %% [markdown]
-### urban individual scatter plot by MATLAB method
+### 3 individual scatter plot by MATLAB method then one bubble chart for 3 all cities
 ### put Series into x-axis and y-axis in scatter() parenthesis, no x=, y=(this is for line)
-plt.scatter(urban_ride_numbers_Series, urban_avg_fare_Series)
+plt.figure(figsize=(10,6))
+
+plt.scatter(urban_ride_numbers_Series, urban_avg_fare_Series, 
+            s=10*urban_avg_driver_Series, c='coral', label ='Urban',
+            alpha=0.8,edgecolors='k', linewidths=1)
+
+plt.scatter(rural_ride_numbers_Series, rural_avg_fare_Series, 
+            s=10*rural_avg_driver_Series, c='gold', label ='Rural',
+            alpha=0.8,edgecolors='k', linewidths=1)
+
+plt.scatter(suburban_ride_numbers_Series, suburban_avg_fare_Series, 
+            s=10*suburban_avg_driver_Series, c='skyblue', label ='Suburban',
+            alpha=0.8,edgecolors='k', linewidths=1)
+
+plt.xlabel('Total Number of Rides (Per City)', fontsize = 12)
+plt.ylabel('Average Fare ($)', fontsize = 12)
+plt.title('PyBer Ride-Sharing Data (2019)',fontsize =20)
+
+plt.grid()
+plt.text(42,35,'Note:\nCircle size correlates\nwith driver count per city.', fontsize = '12')
+# custom unique legend, use attribute: legend.legendHandles[].set_sizes
+plt.legend()
+plt.show()
+
+
+# %%
