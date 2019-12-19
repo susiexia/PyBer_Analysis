@@ -45,6 +45,7 @@ city_data_df.loc[(city_data_df['city']=='Lake Jonathanshire')]
 
 # %% [markdown]
 ## BUBBLE PLOTS
+### create each scatter plot individually and add them all to one chart
 # %% [markdown]
 ### Use filter to create 3 new DF for 3 citty types
 urban_cities_df = pyber_data_df.loc[(pyber_data_df['type']=='Urban')]
@@ -70,3 +71,6 @@ rural_avg_driver_Series = rural_cities_df.groupby(rural_cities_df['city']).mean(
 suburban_avg_driver_Series = suburban_cities_df.groupby(suburban_cities_df['city']).mean()['driver_count']
 
 # %% [markdown]
+### urban individual scatter plot by MATLAB method
+### put Series into x-axis and y-axis in scatter() parenthesis, no x=, y=(this is for line)
+plt.scatter(urban_ride_numbers_Series, urban_avg_fare_Series)
