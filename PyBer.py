@@ -111,15 +111,81 @@ plt.show()
 
 # %% [markdown]
 ### get statistics infor to show the relevance of data
-# %%
-urban_cities_df.describe()
-rural_ride_numbers_Series.describe()
+# use Numpy mean(), median() and SciPy mode()
 
 round(urban_ride_numbers_Series.mean(), 2) 
-suburban_ride_numbers_Series.mode()
-# use Numpy mean(), median() and SciPy mode()
-mode_suburban_ride_numbers_Series = sts.mode(suburban_ride_numbers_Series)
-print(f'The mode for ride counts for urban trips is {mode_suburban_ride_numbers_Series}')
-mode_rural_ride_numbers_Series = sts.mode(rural_ride_numbers_Series)
-mode_rural_ride_numbers_Series
+#print(f'The mode for ride counts for urban trips is {mode_suburban_ride_numbers_Series}')
+#print(f"The mean fare price for urban trips is ${mean_urban_fares:.2f}.")
+# %% [markdown]
+### stats information for ride numbers per city type (without groupby city names)
+mean_urban_ride_count = urban_ride_numbers_Series.describe()['mean']
+mean_rural_ride_count = rural_ride_numbers_Series.describe()['mean']
+mean_suburban_ride_count = suburban_ride_numbers_Series.describe()['mean']
+
+median_urban_ride_count = urban_ride_numbers_Series.describe()['50%']
+median_rural_ride_count = rural_ride_numbers_Series.describe()['50%']
+median_suburban_ride_count = suburban_ride_numbers_Series.describe()['50%']
+
+mode_urban_ride_count = sts.mode(urban_ride_numbers_Series)
+mode_rural_ride_count = sts.mode(rural_ride_numbers_Series)
+mode_suburban_ride_count = sts.mode(suburban_ride_numbers_Series)
+mode_suburban_ride_count
+# %% [markdown]
+### stats information for fares per city type (without groupby city names)
+#### get orginal dataset 
+urban_fares = urban_cities_df['fare'] 
+rural_fares = rural_cities_df['fare'] 
+suburban_fares = suburban_cities_df['fare'] 
+
+mean_urban_fares = urban_fares.describe()['mean']
+mean_rural_fares = rural_fares.describe()['mean']
+mean_suburban_fares = suburban_fares.describe()['mean']
+
+median_urban_fares = urban_fares.describe()['50%']
+median_rural_fares = rural_fares.describe()['50%']
+median_suburban_fares = suburban_fares.describe()['50%']
+
+mode_urban_fares = sts.mode(urban_fares)
+mode_rural_fares = sts.mode(rural_fares)
+mode_suburban_fares = sts.mode(suburban_fares)
+mode_urban_fares
+# %%[markdown]
+### stats information for driver numbers per city type (without groupby city names)
+### which cities need more driver support
+
+urban_drivers = urban_cities_df['driver_count']
+rural_drivers = rural_cities_df['driver_count']
+suburban_drivers = suburban_cities_df['driver_count']
+
+mean_urban_drivers = urban_drivers.describe()['mean']
+mean_rural_drivers = rural_drivers.describe()['mean']
+mean_suburban_drivers = suburban_drivers.describe()['mean']
+print(f"The mean fare price for urban trips is ${mean_urban_drivers:.2f}.")
+print(f"The mean fare price for rural trips is ${mean_rural_drivers:.2f}.")
+print(f"The mean fare price for suburban trips is ${mean_suburban_drivers:.2f}.")
+
+median_urban_drivers = urban_drivers.describe()['50%']
+median_rural_drivers = rural_drivers.describe()['50%']
+median_suburban_driverss = suburban_drivers.describe()['50%']
+
+mode_urban_drivers = sts.mode(urban_drivers)
+mode_rural_drivers = sts.mode(rural_drivers)
+mode_suburban_drivers = sts.mode(suburban_drivers)
+
+
+# %%
+## TEST-------------------------------------------------------------------------
+test_urban_driver = city_data_df.loc[(city_data_df['type']=='Urban'),:]
+mean_test_urban = test_urban_driver['driver_count'].mean()
+mean_test_urban
+
+test_rural_driver = city_data_df.loc[(city_data_df['type']=='Rural'),:]
+mean_test_rural = test_rural_driver['driver_count'].mean()
+print(mean_test_rural)
+
+test_suburban_driver = city_data_df.loc[(city_data_df['type']=='Suburban'),:]
+mean_test_suburban = test_suburban_driver['driver_count'].mean()
+mean_test_suburban
+# TEST-----------------------------------------------------------------------------
+
 # %%
