@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd 
 import statistics
 import numpy as np 
+import scipy.stats as sts 
 
 # %%
 city_file_load = os.path.join('Resources', 'city_data.csv')
@@ -73,7 +74,7 @@ suburban_avg_driver_Series = suburban_cities_df.groupby(suburban_cities_df['city
 # %% [markdown]
 ### 3 individual scatter plot by MATLAB method then one bubble chart for 3 all cities
 ### put Series into x-axis and y-axis in scatter() parenthesis, no x=, y=(this is for line)
-plt.figure(figsize=(10,6))
+plt.figure(figsize=(12,7))
 
 plt.scatter(urban_ride_numbers_Series, urban_avg_fare_Series, 
             s=10*urban_avg_driver_Series, c='coral', label ='Urban',
@@ -90,9 +91,9 @@ plt.scatter(suburban_ride_numbers_Series, suburban_avg_fare_Series,
 plt.xlabel('Total Number of Rides (Per City)', fontsize = 12)
 plt.ylabel('Average Fare ($)', fontsize = 12)
 plt.title('PyBer Ride-Sharing Data (2019)',fontsize =20)
-
 plt.grid()
-plt.text(42,35,'Note:\nCircle size correlates\nwith driver count per city.', fontsize = '12')
+
+plt.text(41,35,'Note:\nCircle size\ncorrelates with\ndriver count per city.', fontsize = '8')
 # manual legend's handles size, use attribute: legend.legendHandles[].set_sizes
 lgnd = plt.legend(fontsize = '12', loc = 'upper right',scatterpoints=1, 
                    bbox_to_anchor=(1,1), title = 'City Types')
@@ -103,8 +104,22 @@ lgnd.legendHandles[0]._sizes = [75]
 lgnd.legendHandles[1]._sizes = [75]
 lgnd.legendHandles[2]._sizes = [75]
 
-plt.show()
-
+# save fig first then show() it
 plt.savefig('analysis/Fig1.png')
 
+plt.show()
+
+# %% [markdown]
+### get statistics infor to show the relevance of data
+# %%
+urban_cities_df.describe()
+rural_ride_numbers_Series.describe()
+
+round(urban_ride_numbers_Series.mean(), 2) 
+suburban_ride_numbers_Series.mode()
+# use Numpy mean(), median() and SciPy mode()
+mode_suburban_ride_numbers_Series = sts.mode(suburban_ride_numbers_Series)
+print(f'The mode for ride counts for urban trips is {mode_suburban_ride_numbers_Series}')
+mode_rural_ride_numbers_Series = sts.mode(rural_ride_numbers_Series)
+mode_rural_ride_numbers_Series
 # %%
