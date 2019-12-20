@@ -105,5 +105,6 @@ lgnd.legendHandles[2]._sizes = [75]
 
 plt.show()
 
+plt.savefig('analysis/Fig1.png')
 
 # %%
