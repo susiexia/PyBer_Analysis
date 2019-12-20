@@ -93,8 +93,16 @@ plt.title('PyBer Ride-Sharing Data (2019)',fontsize =20)
 
 plt.grid()
 plt.text(42,35,'Note:\nCircle size correlates\nwith driver count per city.', fontsize = '12')
-# custom unique legend, use attribute: legend.legendHandles[].set_sizes
-plt.legend()
+# manual legend's handles size, use attribute: legend.legendHandles[].set_sizes
+lgnd = plt.legend(fontsize = '12', loc = 'upper right',scatterpoints=1, 
+                   bbox_to_anchor=(1,1), title = 'City Types')
+lgnd.get_title().set_fontsize(12)
+
+# -------------------------important ---------------------------------
+lgnd.legendHandles[0]._sizes = [75]
+lgnd.legendHandles[1]._sizes = [75]
+lgnd.legendHandles[2]._sizes = [75]
+
 plt.show()
 
 
