@@ -29,19 +29,25 @@ suburban_cities_df = pyber_data_df[pyber_data_df["type"] == "Suburban"]
 
 # %%[markdown]
 ### generate information for create a summary DataFrame
-urban_ride_numbers_Series = urban_cities_df.groupby(urban_cities_df['city']).ride_id.count()
-rural_ride_numbers_Series = rural_cities_df.groupby(rural_cities_df['city']).ride_id.count()
-suburban_ride_numbers_Series = suburban_cities_df.groupby(suburban_cities_df['city']).ride_id.count()
+urban_ride_numbers = urban_cities_df['ride_id'].count()
+rural_ride_numbers = rural_cities_df['ride_id'].count()
+suburban_ride_numbers = suburban_cities_df['ride_id'].count()
 
-urban_fare_Series = urban_cities_df.groupby(urban_cities_df['city']).fare.agg('sum')
-rural_fare_Series = rural_cities_df.groupby(["city"]).sum()["fare"]
-suburban_fare_Series =suburban_cities_df.groupby(["city"]).sum()["fare"]
+urban_fare_numbers = urban_cities_df['fare'].sum()
+rural_fare_numbers = rural_cities_df['fare'].sum()
+suburban_fare_numbers =suburban_cities_df['fare'].sum()
 
-urban_driver_Series = city_data_df[(city_data_df['type'] == 'Urban')].sum()['driver_count']
-rural_driver_Series = city_data_df[(city_data_df['type'] == 'Rural')].sum()['driver_count']
-suburban_driver_Series = city_data_df[(city_data_df['type'] == 'Suburban')].sum()['driver_count']
+urban_driver_numbers = city_data_df[(city_data_df['type'] == 'Urban')].sum()['driver_count']
+rural_driver_numbers = city_data_df[(city_data_df['type'] == 'Rural')].sum()['driver_count']
+suburban_driver_numbers = city_data_df[(city_data_df['type'] == 'Suburban')].sum()['driver_count']
 
-# %%
+urban_avg_Fare_per_ride = urban_fare_numbers/urban_ride_numbers
+rural_avg_Fare_per_ride = rural_fare_numbers/rural_ride_numbers
+suburban_avg_Fare_per_ride = suburban_fare_numbers/suburban_ride_numbers
+
+urban_avg_Fare_per_driver = urban_fare_numbers/urban_driver_numbers
+rural_avg_Fare_per_driver = rural_fare_numbers/rural_driver_numbers
+suburban_avg_Fare_per_driver = suburban_fare_numbers/suburban_driver_numbers
 
 
 # %%
