@@ -43,8 +43,14 @@ PyBer_summary_df
 
 
 # %%
-#new_columns_order = ['city','date','fare','ride_id','driver_count',]
-new_pyber_data_df = pyber_data_df.copy()
+
+newname_pyber_data_df = pyber_data_df.rename(columns = {'city': 'City', 'date':'Date',
+                    'fare':'Fare', 'ride_id': 'Ride Id','driver_count': 'No. Drivers', 
+                    'type':'City Type'} )
+fare_pyber_data_df = newname_pyber_data_df.set_index('Date').copy().drop(columns = ['Ride Id','City','No. Drivers'])
+
+fare_pyber_data_df
+
 
 
 # %%
