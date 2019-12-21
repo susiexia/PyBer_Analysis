@@ -9,6 +9,8 @@ import numpy as np
 import scipy.stats as sts 
 from matplotlib.ticker import MultipleLocator
 
+import matplotlib as mpl 
+
 # %%
 city_file_load = os.path.join('Resources', 'city_data.csv')
 ride_file_load = os.path.join('Resources','ride_data.csv')
@@ -272,4 +274,29 @@ ax.grid()
 plt.savefig('analysis/Fig4.png')
 plt.show()
 
+# %%[markdown]
+## PIE charts
+### % of total fare by city types
+
+type_totalFare_Series = pyber_data_df.groupby(pyber_data_df['type']).fare.agg('sum')
+all_totalFare = type_totalFare_Series.sum()
+
+urban_fares_percentage = type_totalFare_Series['Urban']/all_totalFare*100
+rural_fares_percentage = type_totalFare_Series['Rural']/all_totalFare*100
+suburban_fares_percentage = type_totalFare_Series['Suburban']/all_totalFare*100
+print(f"Urban is {urban_fares_percentage:.2f}%, Ruran is {rural_fares_percentage:.2f}%, Subrban is {suburban_fares_percentage:.2f}%.")
+# %%
+plt.figure(figsize=(10,6))
+
+plt.pie([urban_fares_percentage,rural_fares_percentage,suburban_fares_percentage],
+        labels = ['Urban','Rural','Suburban'], colors= [ "lightcoral","gold","lightskyblue"],
+        autopct='%.1f%%',explode=[0.1,0,0],shadow= True, startangle=270)
+
+plt.title(" % of Total Fares by City Type")
+# the Pie plot dont have fontsize parameter
+# Change the default font size from 10 to 14.
+mpl.rcParams['font.size']=16
+
+plt.savefig('analysis/Fig5.png')
+plt.show()
 # %%
