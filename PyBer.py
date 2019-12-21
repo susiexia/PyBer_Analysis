@@ -7,6 +7,7 @@ import pandas as pd
 import statistics
 import numpy as np 
 import scipy.stats as sts 
+from matplotlib.ticker import MultipleLocator
 
 # %%
 city_file_load = os.path.join('Resources', 'city_data.csv')
@@ -187,5 +188,19 @@ test_suburban_driver = city_data_df.loc[(city_data_df['type']=='Suburban'),:]
 mean_test_suburban = test_suburban_driver['driver_count'].mean()
 mean_test_suburban
 # TEST-----------------------------------------------------------------------------
+
+# %%[markdown]
+## BOX_and_Whisker Plot
+
+fig, ax = plt.subplots()
+ax.boxplot(urban_ride_numbers_Series,labels = ['Urban'],showmeans = True, showfliers = True)
+ax.set_ylabel('Number of Rides')
+ax.set_title('Ride Count Data (2019)')
+ax.set_yticks(np.arange(0,41,step=2.0))
+ax.yaxis.set_minor_locator(MultipleLocator(0.1))
+ax.grid()
+
+
+
 
 # %%
