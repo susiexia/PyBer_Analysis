@@ -314,9 +314,29 @@ plt.pie([urban_rides_percentage,rural_rides_percentage,suburban_rides_percentage
 
 plt.title(" % of Total rides by City Type")
 
-mpl.rcParams['font.size']=16
+# no need enter again: mpl.rcParams['font.size']=16
 plt.savefig('analysis/Fig6.png')
 plt.show()
 
+
+# %% [markdown]
+## PIE charts: % of total drivers by city types
+### still use merged dataframe
+type_totaldriver_Series = pyber_data_df.groupby(pyber_data_df['type']).driver_count.sum()
+all_totaldriver = pyber_data_df['driver_count'].sum()
+
+urban_drivers_percentage = type_totaldriver_Series['Urban']/all_totaldriver*100
+rural_drivers_percentage = type_totaldriver_Series['Rural']/all_totaldriver*100
+suburban_drivers_percentage = type_totaldriver_Series['Suburban']/all_totaldriver*100
+print(f"Urban is {urban_drivers_percentage:.2f}%, Ruran is {rural_drivers_percentage:.2f}%, Subrban is {suburban_rides_percentage:.2f}%.")
+
+plt.figure(figsize=(10,6))
+plt.pie([urban_drivers_percentage,rural_drivers_percentage,suburban_drivers_percentage],
+        labels = ['Urban','Rural','Suburban'], colors= [ "lightcoral","gold","lightskyblue"],
+        autopct='%1.1f%%',explode=[0.1,0,0],shadow= True, startangle=200)
+
+plt.title(" % of Total Drivers by City Type")
+plt.savefig('analysis/Fig7.png')
+plt.show()
 
 # %%
