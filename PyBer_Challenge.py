@@ -50,4 +50,16 @@ rural_avg_Fare_per_driver = rural_fare_numbers/rural_driver_numbers
 suburban_avg_Fare_per_driver = suburban_fare_numbers/suburban_driver_numbers
 
 
+# %%[markdown]
+### create a summary DataFrame
+
+PyBer_summary_df = pd.DataFrame(
+            {'Total Rides':[rural_ride_numbers, suburban_ride_numbers, urban_ride_numbers],
+            'Total Drivers':[rural_driver_numbers, suburban_driver_numbers, urban_driver_numbers],
+            'Total Fares':[rural_fare_numbers, suburban_fare_numbers, urban_fare_numbers],
+            'Average Fare per Ride':[rural_avg_Fare_per_ride,suburban_avg_Fare_per_ride, urban_avg_Fare_per_ride],
+            'Average Fare per Driver':[rural_avg_Fare_per_driver, suburban_avg_Fare_per_driver, urban_avg_Fare_per_driver]},
+            index=['Rural','Suburban','Urban'])
+PyBer_summary_df
+
 # %%
