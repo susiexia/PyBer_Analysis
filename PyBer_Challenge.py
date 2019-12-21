@@ -43,14 +43,33 @@ PyBer_summary_df
 
 
 # %%
-
+# Rename columns
 newname_pyber_data_df = pyber_data_df.rename(columns = {'city': 'City', 'date':'Date',
                     'fare':'Fare', 'ride_id': 'Ride Id','driver_count': 'No. Drivers', 
                     'type':'City Type'} )
-fare_pyber_data_df = newname_pyber_data_df.set_index('Date').copy().drop(columns = ['Ride Id','City','No. Drivers'])
+# Set the index to the Date column, make a copy and drop extra columns
+DateAsIndex_newname_pyber_data_df = newname_pyber_data_df.set_index('Date')
 
-fare_pyber_data_df
+fare_pyber_data_df = DateAsIndex_newname_pyber_data_df.copy().drop(columns = ['Ride Id','City','No. Drivers'])
 
+#Set the index to the datetime data type
+fare_pyber_data_df_new_index = fare_pyber_data_df.index.astype('datetime64[ns]')
+fare_pyber_data_df.index = pd.Index(fare_pyber_data_df_new_index)
+
+fare_pyber_data_df.info()
+ values= 'Fare'
+
+# %%
+# Create a pivot table and get information of total fares by city type
+TotalFare_pivot_df = pd.pivot_table(fare_pyber_data_df, index = fare_pyber_data_df.index, values = 'Fare', columns='City Type', aggfunc=np.sum)
+
+# Create a new DataFrame on a given date
+April_TotalFare_pivot_df = TotalFare_pivot_df.loc['2019-01-01':'2019-04-28']
+April_TotalFare_pivot_df
+
+# Create a new DataFrame by resample fuction in weekly bins
+weekly_April_TotalFare_pivot_df = April_TotalFare_pivot_df.resample('W').sum()
+weekly_April_TotalFare_pivot_df
 
 
 # %%
