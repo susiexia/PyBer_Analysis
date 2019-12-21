@@ -24,6 +24,7 @@ pyber_data_df = pd.merge(ride_data_df,city_data_df,how = 'left',on=['city','city
 
 
 # %%[markdown]
+### Analysis of Summary Table
 
 # %% 
 # Create a summary DataFrame
@@ -57,7 +58,7 @@ fare_pyber_data_df_new_index = fare_pyber_data_df.index.astype('datetime64[ns]')
 fare_pyber_data_df.index = pd.Index(fare_pyber_data_df_new_index)
 
 fare_pyber_data_df.info()
- values= 'Fare'
+
 
 # %%
 # Create a pivot table and get information of total fares by city type
@@ -65,11 +66,32 @@ TotalFare_pivot_df = pd.pivot_table(fare_pyber_data_df, index = fare_pyber_data_
 
 # Create a new DataFrame on a given date
 April_TotalFare_pivot_df = TotalFare_pivot_df.loc['2019-01-01':'2019-04-28']
-April_TotalFare_pivot_df
 
 # Create a new DataFrame by resample fuction in weekly bins
 weekly_April_TotalFare_pivot_df = April_TotalFare_pivot_df.resample('W').sum()
 weekly_April_TotalFare_pivot_df
+
+
+# %% [markdown]
+## Create a Multiple-Line Plot for Total Fares for Each City Type
+## Based on weekly period
+# %% [markdown]
+### Analysis of Multiple-Line Plot
+
+# %%
+plt.style.use('fivethirtyeight')
+
+fig = plt.figure(figsize=(10,6))
+weekly_April_TotalFare_pivot_df.plot()
+
+plt.title('Total Fare by City Type')
+plt.xlabel('Month')
+plt.ylabel('Fare ($USD)')
+
+plt.legend(loc='center')
+plt.savefig('analysis/Challenge_Fig.png')
+plt.show()
+
 
 
 # %%
