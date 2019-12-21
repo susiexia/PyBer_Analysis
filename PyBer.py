@@ -190,17 +190,86 @@ mean_test_suburban
 # TEST-----------------------------------------------------------------------------
 
 # %%[markdown]
-## BOX_and_Whisker Plot
+## BOX_and_Whisker Plot_rides numbers
+####There is one outlier in the urban ride count data. 
+####The average number of rides in the rural cities is 
+####about 4- and 3.5-times lower per city than the urban and suburban cities.
+fig, ax = plt.subplots(figsize=(10,6))
 
-fig, ax = plt.subplots()
-ax.boxplot(urban_ride_numbers_Series,labels = ['Urban'],showmeans = True, showfliers = True)
-ax.set_ylabel('Number of Rides')
-ax.set_title('Ride Count Data (2019)')
-ax.set_yticks(np.arange(0,41,step=2.0))
-ax.yaxis.set_minor_locator(MultipleLocator(0.1))
+ax.boxplot([urban_ride_numbers_Series,rural_ride_numbers_Series,
+            suburban_ride_numbers_Series],
+            labels = ['Urban', 'Rural','Suburban'], showmeans=True)
+
+ax.set_ylabel('Number of Rides',fontsize=14)
+ax.set_xlabel("City Types",fontsize=14)
+ax.set_yticks(np.arange(0,45,step = 3.0))
+ax.yaxis.set_minor_locator(MultipleLocator(1))
+ax.set_title('Ride Count Data (2019)',fontsize=20)
 ax.grid()
 
+plt.savefig('analysis/Fig2.png')
+plt.show()
+
+# %%
+#TEST-------------------------------------
+# ONE FIG 3 AXES
+fig,(ax1,ax2,ax3) = plt.subplots(1,3,sharey=True,figsize=(10,10))
+ax1.boxplot(urban_ride_numbers_Series,labels = ['Urban'],
+            showmeans = True, showfliers = True)
+ax2.boxplot(rural_ride_numbers_Series,labels = ['Rural'],
+            showmeans = True, showfliers = True)
+ax3.boxplot(suburban_ride_numbers_Series,labels = ['Suburban'],
+            showmeans = True, showfliers = True)
+ax1.set_ylabel('Number of Rides')
+ax1.set_title('Ride Count Data (2019)')
+ax1.set_xlabel("City Types",fontsize=14)
+ax1.grid()
+#TEST---------------------------------------------
+
+# %%
+# extract the outlier
+#urban_city_outlier = urban_ride_numbers_Series.loc[urban_ride_numbers_Series == 39].index[0]
+urban_city_outlier = urban_ride_numbers_Series[urban_ride_numbers_Series==39].index[0]
+urban_city_outlier
+# %%[markdown]
+## BOX_and_Whisker Plot_rides numbers
+####From the combined box-and-whisker plots, we see that there are no outliers. 
+# However, the average fare for rides in the rural cities 
+# is about $11 and $5 more per ride than the urban and suburban cities, respectively.
+
+fig, ax = plt.subplots(figsize=(10,6))
+
+ax.boxplot([urban_fares, rural_fares,suburban_fares],
+            labels = ['Urban', 'Rural','Suburban'], showmeans=True)
+
+ax.set_ylabel('Fare($USD)',fontsize=14)
+ax.set_xlabel("City Types",fontsize=14)
+ax.set_yticks(np.arange(0,65,step = 5.0))
+ax.yaxis.set_minor_locator(MultipleLocator(1))
+ax.set_title('Ride Fare Data (2019)',fontsize=20)
+ax.grid()
+
+plt.savefig('analysis/Fig3.png')
+plt.show()
 
 
+# %%[markdown]
+## BOX_and_Whisker Plot_driver count
+####The average number of drivers in rural cities is nine to four times
+#### less per city than in urban and suburban cities, respectively. 
+fig, ax = plt.subplots(figsize=(10,6))
+
+ax.boxplot([urban_drivers, rural_drivers, suburban_drivers],
+            labels = ['Urban', 'Rural','Suburban'], showmeans=True)
+
+ax.set_ylabel('Number of Drivers',fontsize=14)
+ax.set_xlabel("City Types",fontsize=14)
+ax.set_yticks(np.arange(0,75,step = 5.0))
+ax.yaxis.set_minor_locator(MultipleLocator(1))
+ax.set_title('Driver Count Data (2019)',fontsize=20)
+ax.grid()
+
+plt.savefig('analysis/Fig4.png')
+plt.show()
 
 # %%
