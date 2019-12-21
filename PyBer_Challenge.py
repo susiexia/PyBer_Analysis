@@ -22,44 +22,29 @@ ride_data_df.info()
 ## Merge two raw datasets into one 
 pyber_data_df = pd.merge(ride_data_df,city_data_df,how = 'left',on=['city','city'])
 
-### Use filter to create 3 new DF for 3 citty types
-urban_cities_df = pyber_data_df.loc[(pyber_data_df['type']=='Urban')]
-rural_cities_df = pyber_data_df.loc[(pyber_data_df['type']=='Rural'),:]
-suburban_cities_df = pyber_data_df[pyber_data_df["type"] == "Suburban"]
 
 # %%[markdown]
-### generate information for create a summary DataFrame
-urban_ride_numbers = urban_cities_df['ride_id'].count()
-rural_ride_numbers = rural_cities_df['ride_id'].count()
-suburban_ride_numbers = suburban_cities_df['ride_id'].count()
 
-urban_fare_numbers = urban_cities_df['fare'].sum()
-rural_fare_numbers = rural_cities_df['fare'].sum()
-suburban_fare_numbers =suburban_cities_df['fare'].sum()
+# %% 
+# Create a summary DataFrame
+summary_ride_numbers_ds = pyber_data_df.groupby(pyber_data_df['type']).ride_id.count()
+summary_drivers_numbers_ds = city_data_df.groupby(city_data_df['type']).sum()['driver_count']
+summary_fares_numbers_ds = pyber_data_df.groupby(pyber_data_df['type']).fare.sum()
+summary_avg_Fare_per_ride = summary_fares_numbers_ds/summary_ride_numbers_ds
+summary_avg_Fare_per_driver =summary_fares_numbers_ds/summary_drivers_numbers_ds
 
-urban_driver_numbers = city_data_df[(city_data_df['type'] == 'Urban')].sum()['driver_count']
-rural_driver_numbers = city_data_df[(city_data_df['type'] == 'Rural')].sum()['driver_count']
-suburban_driver_numbers = city_data_df[(city_data_df['type'] == 'Suburban')].sum()['driver_count']
-
-urban_avg_Fare_per_ride = urban_fare_numbers/urban_ride_numbers
-rural_avg_Fare_per_ride = rural_fare_numbers/rural_ride_numbers
-suburban_avg_Fare_per_ride = suburban_fare_numbers/suburban_ride_numbers
-
-urban_avg_Fare_per_driver = urban_fare_numbers/urban_driver_numbers
-rural_avg_Fare_per_driver = rural_fare_numbers/rural_driver_numbers
-suburban_avg_Fare_per_driver = suburban_fare_numbers/suburban_driver_numbers
-
-
-# %%[markdown]
-### create a summary DataFrame
-
-PyBer_summary_df = pd.DataFrame(
-            {'Total Rides':[rural_ride_numbers, suburban_ride_numbers, urban_ride_numbers],
-            'Total Drivers':[rural_driver_numbers, suburban_driver_numbers, urban_driver_numbers],
-            'Total Fares':[rural_fare_numbers, suburban_fare_numbers, urban_fare_numbers],
-            'Average Fare per Ride':[rural_avg_Fare_per_ride,suburban_avg_Fare_per_ride, urban_avg_Fare_per_ride],
-            'Average Fare per Driver':[rural_avg_Fare_per_driver, suburban_avg_Fare_per_driver, urban_avg_Fare_per_driver]},
-            index=['Rural','Suburban','Urban'])
+PyBer_summary_df = pd.DataFrame({'Total Rides':summary_ride_numbers_ds.map('{:,.0f}'.format),
+            'Total Drivers':summary_drivers_numbers_ds.map('{:,.0f}'.format),
+            'Total Fares':summary_fares_numbers_ds.map('${:,.2f}'.format),
+            'Average Fare per Ride':summary_avg_Fare_per_ride.map('${:,.2f}'.format),
+            'Average Fare per Driver':summary_avg_Fare_per_driver.map('${:,.2f}'.format)})
+PyBer_summary_df.index.name = None
 PyBer_summary_df
+
+
+# %%
+#new_columns_order = ['city','date','fare','ride_id','driver_count',]
+new_pyber_data_df = pyber_data_df.copy()
+
 
 # %%
