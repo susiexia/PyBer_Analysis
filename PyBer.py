@@ -275,8 +275,7 @@ plt.savefig('analysis/Fig4.png')
 plt.show()
 
 # %%[markdown]
-## PIE charts
-### % of total fare by city types
+## PIE charts: % of total fare by city types
 
 type_totalFare_Series = pyber_data_df.groupby(pyber_data_df['type']).fare.agg('sum')
 all_totalFare = type_totalFare_Series.sum()
@@ -285,9 +284,8 @@ urban_fares_percentage = type_totalFare_Series['Urban']/all_totalFare*100
 rural_fares_percentage = type_totalFare_Series['Rural']/all_totalFare*100
 suburban_fares_percentage = type_totalFare_Series['Suburban']/all_totalFare*100
 print(f"Urban is {urban_fares_percentage:.2f}%, Ruran is {rural_fares_percentage:.2f}%, Subrban is {suburban_fares_percentage:.2f}%.")
-# %%
-plt.figure(figsize=(10,6))
 
+plt.figure(figsize=(10,6))
 plt.pie([urban_fares_percentage,rural_fares_percentage,suburban_fares_percentage],
         labels = ['Urban','Rural','Suburban'], colors= [ "lightcoral","gold","lightskyblue"],
         autopct='%.1f%%',explode=[0.1,0,0],shadow= True, startangle=270)
@@ -299,4 +297,26 @@ mpl.rcParams['font.size']=16
 
 plt.savefig('analysis/Fig5.png')
 plt.show()
+# %%[markdown]
+## PIE charts: % of total rides by city types
+type_totalride_Series = pyber_data_df.groupby(pyber_data_df['type']).ride_id.count()
+all_totalride = pyber_data_df['ride_id'].count()
+
+urban_rides_percentage = type_totalride_Series['Urban']/all_totalride*100
+rural_rides_percentage = type_totalride_Series['Rural']/all_totalride*100
+suburban_rides_percentage = type_totalride_Series['Suburban']/all_totalride*100
+print(f"Urban is {urban_rides_percentage:.2f}%, Ruran is {rural_rides_percentage:.2f}%, Subrban is {suburban_rides_percentage:.2f}%.")
+
+plt.figure(figsize=(10,6))
+plt.pie([urban_rides_percentage,rural_rides_percentage,suburban_rides_percentage],
+        labels = ['Urban','Rural','Suburban'], colors= [ "lightcoral","gold","lightskyblue"],
+        autopct='%1.1f%%',explode=[0.1,0,0],shadow= True, startangle=270)
+
+plt.title(" % of Total rides by City Type")
+
+mpl.rcParams['font.size']=16
+plt.savefig('analysis/Fig6.png')
+plt.show()
+
+
 # %%
