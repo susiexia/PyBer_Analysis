@@ -14,7 +14,7 @@ Improving access to ride-sharing service and determine the affordability fro und
 
 3. Determine mean, median, and mode using Pandas, NumPy, and SciPy statistics.
 
-### Challenge
+## Challenge
 
 #### Challenge Goal
 
@@ -22,7 +22,7 @@ Create an overall snapshot of the ride-sharing data with key metrics of the ride
 
 #### Summary Table
 
-![]()
+![summary_table.JPG](/analysis/summary_table.JPG)
 
 Summary Table Conclusion:
 By comparing the average fare per rides between each city type, rural cities have highest average fare per ride than suburban and urban by around four dollars and 10 dollars, respectively.
@@ -30,7 +30,7 @@ For the column of average fare per driver, rural cities also perform well than s
 
 #### Multiple-line Chart
 
-![]()
+![Challenge_Fig.png](/analysis/Challenge_Fig.png)
 
 Multiple-Line Plot conclusion:
 This multiple-line charts showcases the total fare per city type changes by times. The X axis shows date from 1/1/2019 to 4/28/2019, and total fare in Y axis. In that line chart, Urban cities have highest total fares all the time, and Rural cities are lowest all over time. Suburban's line is in the middle.
