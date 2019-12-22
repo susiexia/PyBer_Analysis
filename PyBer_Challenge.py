@@ -15,17 +15,23 @@ ride_file_load = os.path.join('Resources','ride_data.csv')
 city_data_df = pd.read_csv(city_file_load)
 ride_data_df = pd.read_csv(ride_file_load)
 ride_data_df.info()
-# %%[markdown]
-## Merge two raw datasets into one 
+# %%
+# Merge two raw datasets into one 
 pyber_data_df = pd.merge(ride_data_df,city_data_df,how = 'left',on=['city','city'])
 
+pyber_data_df
+
 # %%[markdown]
-### Analysis of Summary Table
-# The PyBer_summary_df showcases 5 columns that includes :Total Rides,Total Drivers,Total Fares,Average Fare per Ride and Average Fare per Driver.
-# For the first 3 columns, urban cities have highest total numbers of rides, drivers as well as fares. Rural cities have the lowest total numbers.
-# However, comparing the average fare per rides between each city type, rural cities have highest average fare per ride than suburban and urban by around four dollars and 10 dollars, respectively.
+## Analysis of Summary Table
+### Summary Table Description:
+# The PyBer_summary_df showcases 5 columns that includes: *Total Rides,Total Drivers,Total Fares,Average Fare per Ride and Average Fare per Driver*.
+# For the first 3 columns, Urban cities have highest total numbers of rides, drivers as well as fares. Rural cities have the lowest total numbers. Suburban is in the middle.
+### Summary Table Conclusion:
+# However, comparing the average fare per rides between each city type, rural cities have highest average fare per ride than suburban and urban by 
+# around four dollars and 10 dollars, respectively.
 # For the column of average fare per driver, rural cities also perform well than suburban and urban cities by 40% and 230%. 
-# The reason is that the rides count and drivers count of rural cities significantly lower than urban cities. It leads to average matrics greater than urban and suburban.
+# The reason is that the rides and drivers count of rural cities, significantly lower than urban and suburban cities.
+# It leads to average values greater than urban and suburban.
 # %% 
 # Create a summary DataFrame
 summary_ride_numbers_ds = pyber_data_df.groupby(pyber_data_df['type']).ride_id.count()
@@ -59,6 +65,7 @@ fare_pyber_data_df.index = pd.Index(fare_pyber_data_df_new_index)
 
 fare_pyber_data_df.info()
 
+# %%
 # Calculate the total fares by the type of city and date to create a new DataFrame
 sum_fare_pyber_data_df = fare_pyber_data_df.groupby(by = ['Date','City Type']).sum()
 
@@ -81,33 +88,30 @@ weekly_April_TotalFare_pivot_df
 
 
 # %% [markdown]
-## Create a Multiple-Line Plot for Total Fares for Each City Type
-## Based on weekly period
-# %% [markdown]
-### Analysis of Multiple-Line Plot
-# This multiple-line charts showcases the total fare per city type that changes by times. 
+## Analysis of Multiple-Line Plot
+### Multiple-Line Plot Description:
+# This multiple-line charts showcases the total fare per city type changes by times. 
 # The X axis shows date from 1/1/2019 to 4/28/2019, and total fare in Y axis. 
 # In that line chart, Urban cities have highest total fares all the time, and Rural cities are 
-# lowest all over time. 
-# 
+# lowest all over time. Suburban's line is in the middle.
+### Multiple-Line Plot conclusion:
 # Furthermore, the urban's line shows there are several peaks in March and April. At the same time,
-# the line of rural performs some correlation to Urban's line. 
-# For example, in the first week of March, urban's line
+# the line of rural shows some correlation to Urban's line. 
+# For example, in the first week of March, urban's total fares are over 2,500 dollars, 
+# in parallel to that, Rural's line reaches the lowest point, less than 360 dollars.
+
 
 # %%
+# Create a Multiple-Line Plot for Total Fares for Each City Type based on weekly period
 plt.style.use('fivethirtyeight')
 
 fig, ax = plt.subplots(figsize=(12,4))
 weekly_April_TotalFare_pivot_df.plot(ax = ax)
 
 ax.set_title('Total Fare by City Type')
-ax.set_xlabel('Month')
+ax.set_xlabel('Months')
 ax.set_ylabel('Fare ($USD)')
 
 ax.legend(loc='center')
 plt.savefig('analysis/Challenge_Fig.png')
 plt.show()
-
-
-
-# %%
