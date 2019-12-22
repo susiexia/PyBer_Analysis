@@ -7,9 +7,6 @@ import pandas as pd
 import statistics
 import numpy as np 
 import scipy.stats as sts 
-from matplotlib.ticker import MultipleLocator
-
-import matplotlib as mpl 
 
 # %%
 city_file_load = os.path.join('Resources', 'city_data.csv')
@@ -22,10 +19,13 @@ ride_data_df.info()
 ## Merge two raw datasets into one 
 pyber_data_df = pd.merge(ride_data_df,city_data_df,how = 'left',on=['city','city'])
 
-
 # %%[markdown]
 ### Analysis of Summary Table
-
+# The PyBer_summary_df showcases 5 columns that includes :Total Rides,Total Drivers,Total Fares,Average Fare per Ride and Average Fare per Driver.
+# For the first 3 columns, urban cities have highest total numbers of rides, drivers as well as fares. Rural cities have the lowest total numbers.
+# However, comparing the average fare per rides between each city type, rural cities have highest average fare per ride than suburban and urban by around four dollars and 10 dollars, respectively.
+# For the column of average fare per driver, rural cities also perform well than suburban and urban cities by 40% and 230%. 
+# The reason is that the rides count and drivers count of rural cities significantly lower than urban cities. It leads to average matrics greater than urban and suburban.
 # %% 
 # Create a summary DataFrame
 summary_ride_numbers_ds = pyber_data_df.groupby(pyber_data_df['type']).ride_id.count()
@@ -59,16 +59,24 @@ fare_pyber_data_df.index = pd.Index(fare_pyber_data_df_new_index)
 
 fare_pyber_data_df.info()
 
+# Calculate the total fares by the type of city and date to create a new DataFrame
+sum_fare_pyber_data_df = fare_pyber_data_df.groupby(by = ['Date','City Type']).sum()
+
+# Reset the index
+reset_sum_fare_pyber_data_df = sum_fare_pyber_data_df.reset_index()
+reset_sum_fare_pyber_data_df
 
 # %%
 # Create a pivot table and get information of total fares by city type
-TotalFare_pivot_df = pd.pivot_table(fare_pyber_data_df, index = fare_pyber_data_df.index, values = 'Fare', columns='City Type', aggfunc=np.sum)
-
+TotalFare_pivot_df = pd.pivot_table(reset_sum_fare_pyber_data_df, index = 'Date', 
+                     values = 'Fare',columns='City Type', aggfunc=np.sum)
+TotalFare_pivot_df
+# %%
 # Create a new DataFrame on a given date
 April_TotalFare_pivot_df = TotalFare_pivot_df.loc['2019-01-01':'2019-04-28']
 
 # Create a new DataFrame by resample fuction in weekly bins
-weekly_April_TotalFare_pivot_df = April_TotalFare_pivot_df.resample('W').sum()
+weekly_April_TotalFare_pivot_df = April_TotalFare_pivot_df.resample('W-MON').sum()
 weekly_April_TotalFare_pivot_df
 
 
@@ -77,18 +85,26 @@ weekly_April_TotalFare_pivot_df
 ## Based on weekly period
 # %% [markdown]
 ### Analysis of Multiple-Line Plot
+# This multiple-line charts showcases the total fare per city type that changes by times. 
+# The X axis shows date from 1/1/2019 to 4/28/2019, and total fare in Y axis. 
+# In that line chart, Urban cities have highest total fares all the time, and Rural cities are 
+# lowest all over time. 
+# 
+# Furthermore, the urban's line shows there are several peaks in March and April. At the same time,
+# the line of rural performs some correlation to Urban's line. 
+# For example, in the first week of March, urban's line
 
 # %%
 plt.style.use('fivethirtyeight')
 
-fig = plt.figure(figsize=(10,6))
-weekly_April_TotalFare_pivot_df.plot()
+fig, ax = plt.subplots(figsize=(12,4))
+weekly_April_TotalFare_pivot_df.plot(ax = ax)
 
-plt.title('Total Fare by City Type')
-plt.xlabel('Month')
-plt.ylabel('Fare ($USD)')
+ax.set_title('Total Fare by City Type')
+ax.set_xlabel('Month')
+ax.set_ylabel('Fare ($USD)')
 
-plt.legend(loc='center')
+ax.legend(loc='center')
 plt.savefig('analysis/Challenge_Fig.png')
 plt.show()
 
